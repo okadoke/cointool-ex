@@ -1,9 +1,0 @@
-APP="cointool"
-
-BUILD_HOST="cointool.com"
-BUILD_USER="ee"
-BUILD_AT="/home/ee/app_build"
-
-PRODUCTION_HOSTS="cointool.com"
-PRODUCTION_USER="ee"
-DELIVER_TO="/home/ee/app_release"

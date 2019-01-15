@@ -10,12 +10,16 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :cointool, CointoolWeb.Endpoint,
-  load_from_system_env: true,
-  http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: "cointool.io", port: 80],
+  # load_from_system_env: true,
+  http: [port: {:system, "PORT"}],
+  # http: [:inet6, port: System.get_env("PORT") || 4000],
+  url: [host: "localhost", port: {:system, "PORT"}],
+  # url: [host: "localhost", port: 4000],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
-  code_reloader: false,
+  root: ".",
+  version: Application.spec(:cointool, :vsn)
+  # code_reloader: false
 
 # Do not print debug messages in production
 config :logger, level: :info

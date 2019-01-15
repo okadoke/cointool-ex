@@ -19,7 +19,8 @@ defmodule Cointool.MixProject do
   def application do
     [
       mod: {Cointool.Application, []},
-      extra_applications: [:logger, :runtime_tools, :price_cache]
+      # :inets used by price_cache for :httpc fn
+      extra_applications: [:logger, :runtime_tools, :inets, :price_cache]
     ]
   end
 
@@ -40,7 +41,6 @@ defmodule Cointool.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:price_cache, path: "../price_cache"},
-      {:edeliver, "~> 1.6.0"},
       {:distillery, "~> 2.0.12"},
     ]
   end
