@@ -15,3 +15,9 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+
+// let root = require('./index.marko')
+// root.renderSync().appendTo(document.body)
+
+import Elm from "../elm/main.elm"
+Elm.Main.embed(document.body)

@@ -3,6 +3,7 @@ defmodule CointoolWeb.UserSocket do
 
   ## Channels
   # channel "room:*", CointoolWeb.RoomChannel
+  channel "price:source", CointoolWeb.PriceChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

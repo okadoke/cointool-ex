@@ -19,13 +19,27 @@ module.exports = (env, options) => ({
     filename: 'app.js',
     path: path.resolve(__dirname, '../priv/static/js')
   },
+  resolve: {
+    extensions: ['.js', '.marko']
+  },
   module: {
     rules: [
+      {
+        test: /\.marko/,
+        loader: 'marko-loader'
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        use: {
+          loader: 'elm-webpack-loader'
         }
       },
       {
