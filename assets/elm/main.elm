@@ -31,14 +31,28 @@ subscriptions model =
 -- Model
 
 
+type alias Ticker =
+    String
+
+
 type alias Model =
-    { ticker : String
+    { tickers : List Ticker
+    , capital : Maybe Float
+    , pct_to_risk : Maybe Float
+    , entry_price : Maybe Float
+    , stop_price : Maybe Float
+    , target_price : Maybe Float
     }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { ticker = "BTC/USD"
+    ( { tickers = [ "BTC/USD" ]
+      , capital = Just 0.0
+      , pct_to_risk = Just 1.0
+      , entry_price = Just 0.0
+      , stop_price = Just 0.0
+      , target_price = Just 0.0
       }
     , Cmd.none
     )
@@ -49,28 +63,26 @@ init _ =
 
 
 type Msg
-    = ToUpper
-    | ToLower
+    = SetCapital String
+    | SetPctToRisk String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ToUpper ->
-            ( { ticker = String.toUpper model.ticker }
-            , Cmd.none
-            )
+        SetCapital str ->
+            ( { model | capital = String.toFloat str }, Cmd.none )
 
-        ToLower ->
-            ( { ticker = String.toLower model.ticker }, Cmd.none )
+        SetPctToRisk str ->
+            ( { model | pct_to_risk = String.toFloat str }, Cmd.none )
 
 
 
 -- View
 
 
-view : Model -> Html Msg
-view model =
+nav_section : Model -> Html Msg
+nav_section model =
     nav
         [ class "navbar"
         , class "is-primary"
@@ -117,4 +129,18 @@ view model =
                     ]
                 ]
             ]
+        ]
+
+
+body_section : Model -> Html Msg
+body_section model =
+    div [ class "section" ]
+        []
+
+
+view : Model -> Html Msg
+view model =
+    div []
+        [ nav_section model
+        , body_section model
         ]
