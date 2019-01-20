@@ -1,8 +1,20 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Cointool.io" %></h1>
-  <p>Tools to make managing your coins easier.</p>
-</section>
-
-<section class="row">
-  <p>Bitcoin price: $<%= btc_price() %></p>
-</section>
+<nav class="navbar is-white">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/"> 
+        <div class="title">Cointool.io</div>
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="columns">
+    <aside class="column is-2 aside is-primary has-shadow">
+      <a class="item" href="/tools/psc">Position Size Calculator</a>
+    </aside>
+    <div class="column">
+      <div id="main-content" data-content=<%= @content %>></div>
+    </div>
+  </div>
+</div>
+  

@@ -20,7 +20,7 @@ module.exports = (env, options) => ({
     path: path.resolve(__dirname, '../priv/static/js')
   },
   resolve: {
-    extensions: ['.js', '.marko']
+    extensions: ['.js', '.marko', '.imba']
   },
   module: {
     rules: [
@@ -44,8 +44,12 @@ module.exports = (env, options) => ({
         }
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        test: /\.imba$/,
+        loader: 'imba/loader'
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       }
     ]
   },
