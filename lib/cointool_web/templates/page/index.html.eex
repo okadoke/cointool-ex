@@ -5,6 +5,14 @@
         <div class="title">Cointool.io</div>
       </a>
     </div>
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <div name="price-ticker" data-ticker="BTC/USD" data-label="BTC Price" class="navbar-item">          
+        </div>
+        <div name="price-ticker" data-ticker="ETH/USD" data-label="ETH Price" class="navbar-item">
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 <div class="container">
