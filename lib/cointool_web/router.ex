@@ -17,6 +17,7 @@ defmodule CointoolWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/tools/psc", PageController, :psc
   end
 
   # Other scopes may use custom stacks.

@@ -19,8 +19,15 @@ module.exports = (env, options) => ({
     filename: 'app.js',
     path: path.resolve(__dirname, '../priv/static/js')
   },
+  resolve: {
+    extensions: ['.js', '.marko', '.imba']
+  },
   module: {
     rules: [
+      {
+        test: /\.marko/,
+        loader: 'marko-loader'
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -29,8 +36,20 @@ module.exports = (env, options) => ({
         }
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        test: /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        loader: 'elm-webpack-loader',
+        options: {
+          debug: true
+        }
+      },
+      {
+        test: /\.imba$/,
+        loader: 'imba/loader'
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       }
     ]
   },

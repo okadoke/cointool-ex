@@ -1,0 +1,24 @@
+
+class {
+  // NOTES:
+  // this.input isn't available during onCreate, which is why it's passed in
+  // so functions called during onCreate won't have access to this.input
+  onCreate(input) {
+    this.state = {
+      label: input.label || (input.ticker + ": "),
+      price: 0
+    }
+    input.priceChannel.on(input.ticker, payload => {
+      this.state.price = payload.price
+    })
+    // udpate price now (0), and every 5s
+    setTimeout(function request() {
+      input.priceChannel.push('get_price', {ticker: input.ticker})
+      setTimeout(request, 5000)
+    }, 0)
+  }
+}
+
+<div>
+  <h2>${state.label + state.price}</h2>
+</div>

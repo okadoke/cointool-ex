@@ -1,0 +1,42 @@
+import socket from "./socket"
+<!-- import price_ticker from "./components/price_ticker" -->
+
+<nav.navbar role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <div.title>Cointool</div>
+    <a.navbar-burger.burger role="button" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div#mainNavbar.navbar-menu>
+    <div.navbar-start>
+      <div.navbar-item>
+        <a href="/">Home</a>
+      </div>
+      <div.navbar-item.has-dropdown.is-hoverable>
+        <div.navbar-link>
+          <a href="/t/psc">Tools</a>
+        </div>
+        <div.navbar-dropdown>
+          <a.navbar-item>Position Size Calculator</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div.navbar-end>
+    <div.navbar-item>
+      <p.is-size-7>Current BTC Price:</p>
+      <price-ticker label="" ticker="BTC/USD" price-channel=socket.price_channel></price-ticker>
+    </div>
+  </div>
+</nav>
+
+<section>
+  <price-ticker ticker="BTC/USD" price-channel=socket.price_channel></price-ticker>
+  <price-ticker ticker="ETH/USD" price-channel=socket.price_channel></price-ticker>
+  <price-ticker ticker="ETH/BTC" price-channel=socket.price_channel></price-ticker>
+  <price-ticker ticker="XRP/USD" price-channel=socket.price_channel></price-ticker>
+  <price-ticker ticker="QKC/BTC" price-channel=socket.price_channel></price-ticker>
+</section>
