@@ -12,6 +12,16 @@
         <div name="price-ticker" data-ticker="ETH/USD" data-label="ETH Price" class="navbar-item">
         </div>
       </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="select">
+            <select name="" id="">
+              <option>USD</option>
+              <option>EUR</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
