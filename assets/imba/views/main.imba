@@ -8,7 +8,7 @@ export tag Main
         <div.container>
           <div.navbar-brand>
             <a.navbar-item href="/"> 
-              <div.title> "Cointool.io"
+              <div.title> "Cointool"
       <div.container>
         <div.columns>
           <aside.column.is-2.aside.is-fullheight.is-primary.has-shadow>

@@ -1,5 +1,4 @@
-# import socket from "../../js/socket.js"
-let socket = require('../../js/socket'):default
+import { price_channel } from "../../js/socket.js"
 
 export tag PriceTicker
 
@@ -10,11 +9,11 @@ export tag PriceTicker
     @price = 0.0
 
   def request_price
-    socket:price_channel.push('get_price', {ticker: @ticker})
+    price_channel.push('get_price', {ticker: @ticker})
+    setTimeout(&, 10000) do request_price
 
   def setup
-    socket:price_channel.on(@ticker, do |payload|
-      setTimeout(&, 5000) do request_price
+    price_channel.on(@ticker, do |payload|
       @price = payload:price
       console.log('price received for', @ticker, ':', @price)
       Imba.commit()

@@ -78,8 +78,47 @@ update msg model =
 
 -- View
 
+capital_row : Model -> Html Msg
+capital_row model =
+    div []
+        []
+
+
+input_row : Model -> Html Msg
+input_row model =
+    div []
+        []
+
+
+output_row : Model -> Html Msg
+output_row model =
+    div []
+        []
 
 view : Model -> Html Msg
 view model =
-    div []
-        []
+    div 
+      []
+      [div 
+        [ class "box"]
+        [ div
+            [ class "level"
+            ]
+            [ div
+                [ class "heading"
+                , class "center"
+                ]
+                [ text "Bitmex Calculator"
+                ]
+            ]
+        , div []
+            [ capital_row model
+            , input_row model
+            , input_row model
+            , input_row model
+            , input_row model
+            , output_row model
+            , output_row model
+            ]
+        ]
+      ]

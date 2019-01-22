@@ -55,12 +55,9 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("price:source", {})
-channel.join()
+let price_channel = socket.channel("price:source", {})
+price_channel.join()
   .receive("ok", resp => { console.log("Joined price channel successfully", resp) })
   .receive("error", resp => { console.log("Unable to join price channel", resp) })
 
-export default {
-  socket: socket,
-  price_channel: channel
-}
+export { socket, price_channel }

@@ -1,4 +1,5 @@
 import '../util' as util
+import { price_channel } from '../../js/socket'
 
 export tag Psc
 
@@ -7,8 +8,10 @@ export tag Psc
     @calc_data = {
       params: {
         capital: 0,
-        risk_pct: 0,
+        capital_cur: 'btc',
+        risk_pct: 1,
         entry: 0,
+        entry_cur: 'usd',
         stop: 0,
         target: 0
       },
@@ -27,19 +30,18 @@ export tag Psc
       def r
         util.fmt_currency((target_dist > 0) ? (target_dist / stop_dist) : 0)
       def position_size
-        (stop_dist > 0) ? (risk_value / stop_dist) * this:params:entry : 0
+        util.fmt_currency((stop_dist > 0) ? (risk_value / stop_dist) * this:params:entry : 0)
     }
 
   def setup
     let local_data = read_local_storage
     if local_data
-      @calc_data:params = local_data
+      Object.assign(@calc_data:params, local_data)
 
   def oninput e
     write_local_storage @calc_data:params
 
   def render
-    console.log('rendering Psc')
     <self>
       <div.box>
         <div.level>
@@ -47,7 +49,7 @@ export tag Psc
         <div>
           <CapitalRow data=@calc_data>
           <InputRow label="Risk %" data=@calc_data key="risk_pct">
-          <InputRow label="Entry Price" data=@calc_data key="entry">
+          <EntryRow data=@calc_data>
           <InputRow label="Stop Price" data=@calc_data key="stop">
           <InputRow label="Target Price" data=@calc_data key="target">
           <OutputRow label="Reward:Risk" value=@calc_data.r>
@@ -64,21 +66,81 @@ export tag Psc
 tag CapitalRow
 
   prop data
+  prop currency
+
+  def build
+    @conversion = {
+      btc: {
+        btc: do
+          @data:params:capital
+        usd: do
+          @data:params:capital * @btcInUsd
+      },
+      usd: {
+        usd: do
+          @data:params:capital
+        btc: do
+          @data:params:capital / @btcInUsd
+      }
+    }
+
+  def request_price
+    price_channel.push('get_price', {ticker: 'BTC/USD'})
+    setTimeout(&, 100000) do request_price
+
+  def setup
+    price_channel.on('BTC/USD', do |payload|
+      @btcInUsd = payload:price
+      Imba.commit()
+    )
+    # udpate price every 5s
+    # initiate the price request loop
+    request_price
   
+  def btcValue
+    @conversion[@data:params:capital_cur]:btc()
+
+  def usdValue
+    @conversion[@data:params:capital_cur]:usd()
+      
   def render
     <self.field.is-horizontal>
       <div.field-label.is-small>
         <label.label> "Capital"
       <div.field-body>
-        <div.field.has-addons>
-          <p.control>
-            <span.select.is-small>
-              <select>
-                <option> "BTC"
-                <option> "$"
-                <option> "Eur"
-          <p.control>
-            <input[data:params:capital].input.is-small type="text">
+        <div.field.is-narrow>
+          <div.field.has-addons>
+            <p.control>
+              <span.select.is-small>
+                <select[data:params:capital_cur]>
+                  <option value='btc'> "BTC"
+                  <option value='usd'> "USD"
+                  <option value='eur'> "Eur"
+            <p.control>
+              <input[data:params:capital].input.is-small type="number" min="0">
+          <div.help>
+            <span> btcValue + " BTC" 
+            <span css:float='right'> usdValue + " USD"
+
+tag EntryRow
+
+  prop data
+      
+  def render
+    <self.field.is-horizontal>
+      <div.field-label.is-small>
+        <label.label> "Entry Price"
+      <div.field-body>
+        <div.field.is-narrow>
+          <div.field.has-addons>
+            <p.control>
+              <span.select.is-small>
+                <select[data:params:entry_cur]>
+                  <option value='btc'> "BTC"
+                  <option value='usd'> "USD"
+                  <option value='eur'> "EUR"
+            <p.control>
+              <input[data:params:entry].input.is-small type="number" min="0">
 
 tag InputRow
 
@@ -91,9 +153,9 @@ tag InputRow
       <div.field-label.is-small>
         <label.label> label
       <div.field-body>
-        <div.field.is-expanded>
+        <div.field.is-narrow>
           <p.control>
-            <input[data:params[key]].input.is-small type="text">
+            <input[data:params[key]].input.is-small type="number" min="0" step="0.1">
 
 tag OutputRow
   prop label
@@ -106,7 +168,7 @@ tag OutputRow
       <div.field-label.is-small>
         <label.label> label
       <div.field-body>
-        <div.field>
+        <div.field.is-narrow>
           <div.control>
             <input.input.is-small value=value readOnly=true>
 

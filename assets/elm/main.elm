@@ -1,7 +1,7 @@
 module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
 import Browser
-import Html exposing (Html, a, div, h1, nav, text, aside)
+import Html exposing (Html, a, aside, div, h1, nav, text)
 import Html.Attributes exposing (..)
 
 
@@ -80,60 +80,57 @@ update msg model =
 
 -- View
 
+
 nav_header : Model -> Html Msg
 nav_header model =
-    nav [ class "navbar"
+    nav
+        [ class "navbar"
         , class "is-white"
         , attribute "role" "navigation"
         , attribute "aria-label" "main navigation"
         ]
-        [ div [ class "navbar-brand" ]
-            [ a
-                [ class "navbar-item"
-                , attribute "href" "/"
+        [ div [ class "container" ]
+            [ div [ class "navbar-brand" ]
+                [ a
+                    [ class "navbar-item"
+                    , attribute "href" "/"
+                    ]
+                    [ text "Cointool" ]
                 ]
-                [ text "Cointool" ]
             ]
         , div
             [ id "mainNavbar"
             , class "navbar-menu"
             ]
-            [ div [ class "navbar-start" ]
-                [ div
-                    [ class "navbar-item"
-                    , class "has-dropdown"
-                    , class "is-hoverable"
+            []
+        ]
+
+
+nav_menu : Model -> Html Msg
+nav_menu model =
+    div
+        [ class "container" ]
+        [ div [ class "columns" ]
+            [ aside
+                [ class "column"
+                , class "is-2"
+                , class "aside"
+                , class "is-primary"
+                , class "has-shadow"
+                ]
+                [ a
+                    [ class "item"
+                    , href "/tools/psc"
                     ]
-                    [ div [ class "navbar-link" ]
-                        [ a
-                            [ attribute "href" "/tools/" ]
-                            [ text "Tools" ]
-                        ]
-                    , div [ class "navbar-dropdown" ]
-                        [ a
-                            [ class "navbar-item"
-                            , attribute "href" "/tools/psc"
-                            ]
-                            [ text "Position Size Calculator" ]
-                        ]
-                    ]
+                    [ text "Position Size Calculator" ]
+                ]
+            , div [ class "column" ]
+                [ div [ id "main-content" ]
+                    []
                 ]
             ]
         ]
 
-nav_menu : Model -> Html Msg
-nav_menu model =
-    div 
-        [ class "container"]
-        [ div 
-            [class "columns"]
-            [aside 
-                [class "column"
-                , class "is-2"
-                , class "aside"
-                , class "is-primary"
-                , class "has-shadow"]
-                []]]
 
 nav_section : Model -> Html Msg
 nav_section model =

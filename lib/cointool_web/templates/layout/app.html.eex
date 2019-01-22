@@ -13,6 +13,7 @@
   </head>
   <body>
     <%= render @view_module, @view_template, assigns %>
+    <!-- <div id="elm_root"></div> -->
     <script type="text/javascript" src='<%= Routes.static_path(@conn, "/js/app.js") %>'></script>
   </body>
 </html>
