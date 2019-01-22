@@ -1,7 +1,7 @@
 module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
 import Browser
-import Html exposing (Html, a, div, h1, nav, text)
+import Html exposing (Html, a, div, h1, nav, text, aside)
 import Html.Attributes exposing (..)
 
 
@@ -80,12 +80,10 @@ update msg model =
 
 -- View
 
-
-nav_section : Model -> Html Msg
-nav_section model =
-    nav
-        [ class "navbar"
-        , class "is-primary"
+nav_header : Model -> Html Msg
+nav_header model =
+    nav [ class "navbar"
+        , class "is-white"
         , attribute "role" "navigation"
         , attribute "aria-label" "main navigation"
         ]
@@ -95,14 +93,6 @@ nav_section model =
                 , attribute "href" "/"
                 ]
                 [ text "Cointool" ]
-            , a
-                [ class "navbar-burger"
-                , attribute "role" "button"
-                , attribute "aria-label" "menu"
-                , attribute "aria-expanded" "false"
-                , attribute "data-target" "mainNavbar"
-                ]
-                []
             ]
         , div
             [ id "mainNavbar"
@@ -129,6 +119,27 @@ nav_section model =
                     ]
                 ]
             ]
+        ]
+
+nav_menu : Model -> Html Msg
+nav_menu model =
+    div 
+        [ class "container"]
+        [ div 
+            [class "columns"]
+            [aside 
+                [class "column"
+                , class "is-2"
+                , class "aside"
+                , class "is-primary"
+                , class "has-shadow"]
+                []]]
+
+nav_section : Model -> Html Msg
+nav_section model =
+    div []
+        [ nav_header model
+        , nav_menu model
         ]
 
 

@@ -19,11 +19,11 @@ import "phoenix_html"
 // let root = require('./index.marko')
 // root.renderSync().appendTo(document.body)
 
-// import {Elm} from "../elm/main.elm"
-// Elm.Main.init({node: document.body})
+import { Elm } from "../elm/main.elm"
+Elm.Main.init({ node: document.body })
 
 // import "../imba/main.imba"
 
-import '../imba/main.imba'
+// import '../imba/main.imba'
 // console.log(Imba)
 // Imba.mount(Imba.createElement(Main).end())
